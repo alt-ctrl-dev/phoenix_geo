@@ -1,5 +1,6 @@
 defmodule PhoenixGeo.Repo do
   use Ecto.Repo,
     otp_app: :phoenix_geo,
-    adapter: Ecto.Adapters.Postgres
+    adapter: Ecto.Adapters.Postgres,
+    types: PhoenixGeo.PostgresTypes
 end

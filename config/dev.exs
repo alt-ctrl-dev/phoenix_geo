@@ -7,7 +7,8 @@ config :phoenix_geo, PhoenixGeo.Repo,
   hostname: "localhost",
   database: "phoenix_geo_dev",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  types: PhoenixGeo.PostgresTypes
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
