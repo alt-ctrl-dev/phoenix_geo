@@ -26,7 +26,8 @@ config :phoenix_geo, PhoenixGeoWeb.Endpoint,
   secret_key_base: "txZd9bBBISb1B7gzejcSqmsV8Pr1wxb3JL96mSJ6hX3ftwm1AUD9mmPsip0xF9BY",
   watchers: [
     # Start the esbuild watcher by calling Esbuild.install_and_run(:default, args)
-    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]}
+    esbuild: {Esbuild, :install_and_run, [:default, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

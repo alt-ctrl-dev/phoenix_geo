@@ -1,0 +1,31 @@
+<h1>Show Agent</h1>
+
+<%= if @live_action in [:edit] do %>
+  <.modal return_to={Routes.agent_show_path(@socket, :show, @agent)}>
+    <.live_component
+      module={PhoenixGeoWeb.AgentLive.FormComponent}
+      id={@agent.id}
+      title={@page_title}
+      action={@live_action}
+      agent={@agent}
+      return_to={Routes.agent_show_path(@socket, :show, @agent)}
+    />
+  </.modal>
+<% end %>
+
+<ul>
+
+  <li>
+    <strong>Name:</strong>
+    <%= @agent.name %>
+  </li>
+
+  <li>
+    <strong>Description:</strong>
+    <%= @agent.description %>
+  </li>
+
+</ul>
+
+<span><%= live_patch "Edit", to: Routes.agent_show_path(@socket, :edit, @agent), class: "button" %></span> |
+<span><%= live_redirect "Back", to: Routes.agent_index_path(@socket, :index) %></span>

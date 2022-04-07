@@ -50,7 +50,8 @@ defmodule PhoenixGeo.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:faker, "~> 0.17.0"},
       {:geo_postgis, "~> 3.4"},
-      {:geo, "~> 3.4"}
+      {:geo, "~> 3.4"},
+      {:tailwind, "~> 0.1", runtime: Mix.env() == :dev}
     ]
   end
 

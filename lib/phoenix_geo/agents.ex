@@ -18,20 +18,21 @@ defmodule PhoenixGeo.Agents do
     |> Repo.all()
   end
 
-  def get_agent_with_ares!(id) do
-    fields = [:id, :name, :description, :inserted_at]
-    updated_fields = fields ++ [areas: fields]
-
-    query =
-      from project in build_base_query(),
-        join: area in Area,
-        on: project.id == area.agent_id,
-        preload: [areas: area],
-        select: struct(project, ^updated_fields),
+  def get_agent_with_areas!(id) do
+    area_q =
+      from(a in Area,
+        # select: struct(a, ^fields),
         select_merge: %{
-          areas: %{area: fragment("st_area(?) * 1000 * 1000", area.geojson_feature)}
+          area: fragment("st_area(?) * 1000 * 1000", a.geometry)
         }
+      )
 
-    Repo.get!(query, id)
+    Repo.get!(
+      from(p in build_base_query(),
+        # select: struct(project, ^updated_fields),
+        preload: [areas: ^area_q]
+      ),
+      id
+    )
   end
 end

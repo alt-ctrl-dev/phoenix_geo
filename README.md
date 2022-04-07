@@ -11,3 +11,7 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
 
 ##
+
+agents = PhoenixGeo.Agents.get_agents  
+agent = agents |> Enum.random
+PhoenixGeo.Agents.get_agent_with_ares!(agent.id)

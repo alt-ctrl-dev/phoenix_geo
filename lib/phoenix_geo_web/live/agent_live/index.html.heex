@@ -1,0 +1,58 @@
+<div class="flex justify-around items-center my-4">
+<h1 class="font-semibold text-xl">Listing Agents</h1>
+<%= live_patch "New Agent", to: Routes.agent_index_path(@socket, :new), class: "block p-4 outline outline-1" %>
+</div>
+
+<%= if @live_action in [:new, :edit] do %>
+  <.modal return_to={Routes.agent_index_path(@socket, :index)}>
+    <.live_component
+      module={PhoenixGeoWeb.AgentLive.FormComponent}
+      id={@agent.id || :new}
+      title={@page_title}
+      action={@live_action}
+      agent={@agent}
+      return_to={Routes.agent_index_path(@socket, :index)}
+    />
+  </.modal>
+<% end %>
+
+<table class="w-full">
+  <thead>
+    <tr>
+      <th class="border-r-2">Name</th>
+      <th class="border-r-2">Description</th>
+      <th class="border-r-2">Job</th>
+      <th class="border-r-2"></th>
+      <th class="border-r-2"></th>
+    </tr>
+  </thead>
+  <tbody id="agents">
+    <%= for agent <- @agents do %>
+      <tr id={"agent-#{agent.id}"} class="text-center">
+        <td><%= agent.name %></td>
+        <td><%= agent.description %></td>
+        <td><%= agent.job %></td>
+        <td>
+          <%= if agent.id in @starring do %>
+            <span class="material-icons-outlined animate-spin-slow">autorenew</span>
+          <% else %>
+            <span phx-click="toggle-favourite" phx-value-id={agent.id} class="material-icons-outlined cursor-pointer">
+              <%= if agent.favourite do %>
+                star  
+              <% else %>
+                star_border
+              <% end %>
+            </span>
+          <% end %>
+        </td>
+
+        <td>
+          <span><%= live_redirect "Show", to: Routes.agent_show_path(@socket, :show, agent) %></span>
+          <span><%= live_patch "Edit", to: Routes.agent_index_path(@socket, :edit, agent) %></span>
+          <span><%= link "Delete", to: "#", phx_click: "delete", phx_value_id: agent.id, data: [confirm: "Are you sure?"] %></span>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

@@ -18,6 +18,12 @@ defmodule PhoenixGeoWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    live "/agents", AgentLive.Index, :index
+    live "/agents/new", AgentLive.Index, :new
+    live "/agents/:id/edit", AgentLive.Index, :edit
+
+    live "/agents/:id", AgentLive.Show, :show
+    live "/agents/:id/show/edit", AgentLive.Show, :edit
   end
 
   # Other scopes may use custom stacks.
